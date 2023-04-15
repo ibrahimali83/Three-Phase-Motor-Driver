@@ -1,0 +1,998 @@
+
+Star-delta Reversing Motor.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000004e0  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  00000554  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000003  00800060  00800060  00000554  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  00000554  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000584  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 00000118  00000000  00000000  000005c0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   00000df3  00000000  00000000  000006d8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 0000083c  00000000  00000000  000014cb  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   0000094b  00000000  00000000  00001d07  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  000001ac  00000000  00000000  00002654  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    0000048e  00000000  00000000  00002800  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    000003ad  00000000  00000000  00002c8e  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 000000b8  00000000  00000000  0000303b  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+   8:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+   c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  10:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  14:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  18:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  1c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  20:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  24:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  28:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  2c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  30:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  34:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  38:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  3c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  40:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  44:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  48:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  4c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  50:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d8 e0       	ldi	r29, 0x08	; 8
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+
+00000060 <__do_clear_bss>:
+  60:	20 e0       	ldi	r18, 0x00	; 0
+  62:	a0 e6       	ldi	r26, 0x60	; 96
+  64:	b0 e0       	ldi	r27, 0x00	; 0
+  66:	01 c0       	rjmp	.+2      	; 0x6a <.do_clear_bss_start>
+
+00000068 <.do_clear_bss_loop>:
+  68:	1d 92       	st	X+, r1
+
+0000006a <.do_clear_bss_start>:
+  6a:	a3 36       	cpi	r26, 0x63	; 99
+  6c:	b2 07       	cpc	r27, r18
+  6e:	e1 f7       	brne	.-8      	; 0x68 <.do_clear_bss_loop>
+  70:	0e 94 5f 01 	call	0x2be	; 0x2be <main>
+  74:	0c 94 6e 02 	jmp	0x4dc	; 0x4dc <_exit>
+
+00000078 <__bad_interrupt>:
+  78:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+0000007c <AppInit>:
+
+/* Initialize Application */
+void AppInit (void)
+{
+	/* Initialize button pins as input Pull-up */
+	ButtonInit(PORTA, PIN0);
+  7c:	60 e0       	ldi	r22, 0x00	; 0
+  7e:	80 e0       	ldi	r24, 0x00	; 0
+  80:	0e 94 a5 00 	call	0x14a	; 0x14a <ButtonInit>
+	ButtonInit(PORTA, PIN1);
+  84:	61 e0       	ldi	r22, 0x01	; 1
+  86:	80 e0       	ldi	r24, 0x00	; 0
+  88:	0e 94 a5 00 	call	0x14a	; 0x14a <ButtonInit>
+	ButtonInit(PORTA, PIN2);
+  8c:	62 e0       	ldi	r22, 0x02	; 2
+  8e:	80 e0       	ldi	r24, 0x00	; 0
+  90:	0e 94 a5 00 	call	0x14a	; 0x14a <ButtonInit>
+	
+	/* Set Contactor pins to Output/ Low */
+	ContInit(PORTD, PIN0);
+  94:	60 e0       	ldi	r22, 0x00	; 0
+  96:	81 e0       	ldi	r24, 0x01	; 1
+  98:	0e 94 e4 00 	call	0x1c8	; 0x1c8 <ContInit>
+	ContInit(PORTD, PIN1);
+  9c:	61 e0       	ldi	r22, 0x01	; 1
+  9e:	81 e0       	ldi	r24, 0x01	; 1
+  a0:	0e 94 e4 00 	call	0x1c8	; 0x1c8 <ContInit>
+	ContInit(PORTD, PIN2);
+  a4:	62 e0       	ldi	r22, 0x02	; 2
+  a6:	81 e0       	ldi	r24, 0x01	; 1
+  a8:	0e 94 e4 00 	call	0x1c8	; 0x1c8 <ContInit>
+	ContInit(PORTD, PIN3);
+  ac:	63 e0       	ldi	r22, 0x03	; 3
+  ae:	81 e0       	ldi	r24, 0x01	; 1
+  b0:	0e 94 e4 00 	call	0x1c8	; 0x1c8 <ContInit>
+  b4:	08 95       	ret
+
+000000b6 <AppStart>:
+}
+
+/* Starting Application */
+void AppStart (void)
+{
+	ButtonValue = ButtonStatus ();
+  b6:	0e 94 b4 00 	call	0x168	; 0x168 <ButtonStatus>
+  ba:	80 93 62 00 	sts	0x0062, r24	; 0x800062 <ButtonValue>
+	ContValue = ContStatus ();
+  be:	0e 94 3a 01 	call	0x274	; 0x274 <ContStatus>
+  c2:	80 93 61 00 	sts	0x0061, r24	; 0x800061 <ContValue>
+	if ((ButtonValue == 0) && (ContValue == 0))
+  c6:	90 91 62 00 	lds	r25, 0x0062	; 0x800062 <ButtonValue>
+  ca:	91 11       	cpse	r25, r1
+  cc:	06 c0       	rjmp	.+12     	; 0xda <AppStart+0x24>
+  ce:	81 11       	cpse	r24, r1
+  d0:	04 c0       	rjmp	.+8      	; 0xda <AppStart+0x24>
+	Mode = 1;
+  d2:	81 e0       	ldi	r24, 0x01	; 1
+  d4:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
+  d8:	17 c0       	rjmp	.+46     	; 0x108 <AppStart+0x52>
+	else if ((ButtonValue == 1) && (ContValue == 0))
+  da:	91 30       	cpi	r25, 0x01	; 1
+  dc:	31 f4       	brne	.+12     	; 0xea <AppStart+0x34>
+  de:	81 11       	cpse	r24, r1
+  e0:	04 c0       	rjmp	.+8      	; 0xea <AppStart+0x34>
+	Mode = 2;
+  e2:	82 e0       	ldi	r24, 0x02	; 2
+  e4:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
+  e8:	0f c0       	rjmp	.+30     	; 0x108 <AppStart+0x52>
+	else if ((ButtonValue == 2) && (ContValue == 1))
+  ea:	92 30       	cpi	r25, 0x02	; 2
+  ec:	31 f4       	brne	.+12     	; 0xfa <AppStart+0x44>
+  ee:	81 30       	cpi	r24, 0x01	; 1
+  f0:	21 f4       	brne	.+8      	; 0xfa <AppStart+0x44>
+	Mode = 3;
+  f2:	83 e0       	ldi	r24, 0x03	; 3
+  f4:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
+  f8:	07 c0       	rjmp	.+14     	; 0x108 <AppStart+0x52>
+	else if ((ButtonValue == 2) && (ContValue == 2))
+  fa:	92 30       	cpi	r25, 0x02	; 2
+  fc:	29 f4       	brne	.+10     	; 0x108 <AppStart+0x52>
+  fe:	82 30       	cpi	r24, 0x02	; 2
+ 100:	19 f4       	brne	.+6      	; 0x108 <AppStart+0x52>
+	Mode = 4;
+ 102:	84 e0       	ldi	r24, 0x04	; 4
+ 104:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
+	
+	switch (Mode)
+ 108:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 10c:	82 30       	cpi	r24, 0x02	; 2
+ 10e:	71 f0       	breq	.+28     	; 0x12c <AppStart+0x76>
+ 110:	18 f4       	brcc	.+6      	; 0x118 <AppStart+0x62>
+ 112:	81 30       	cpi	r24, 0x01	; 1
+ 114:	31 f0       	breq	.+12     	; 0x122 <AppStart+0x6c>
+ 116:	08 95       	ret
+ 118:	83 30       	cpi	r24, 0x03	; 3
+ 11a:	69 f0       	breq	.+26     	; 0x136 <AppStart+0x80>
+ 11c:	84 30       	cpi	r24, 0x04	; 4
+ 11e:	81 f0       	breq	.+32     	; 0x140 <AppStart+0x8a>
+ 120:	08 95       	ret
+	{
+	case 1: 
+	MotorRight ();
+ 122:	0e 94 e8 00 	call	0x1d0	; 0x1d0 <MotorRight>
+	Mode = 0;
+ 126:	10 92 60 00 	sts	0x0060, r1	; 0x800060 <__DATA_REGION_ORIGIN__>
+	break;
+ 12a:	08 95       	ret
+	
+	case 2:	
+	MotorLeft (); 
+ 12c:	0e 94 ff 00 	call	0x1fe	; 0x1fe <MotorLeft>
+	Mode = 0;
+ 130:	10 92 60 00 	sts	0x0060, r1	; 0x800060 <__DATA_REGION_ORIGIN__>
+	break;
+ 134:	08 95       	ret
+	
+	case 3:	
+	StopMotor_R (); 
+ 136:	0e 94 16 01 	call	0x22c	; 0x22c <StopMotor_R>
+	Mode = 0;
+ 13a:	10 92 60 00 	sts	0x0060, r1	; 0x800060 <__DATA_REGION_ORIGIN__>
+	break;
+ 13e:	08 95       	ret
+	
+	case 4:
+	StopMotor_L ();
+ 140:	0e 94 28 01 	call	0x250	; 0x250 <StopMotor_L>
+	Mode = 0;
+ 144:	10 92 60 00 	sts	0x0060, r1	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 148:	08 95       	ret
+
+0000014a <ButtonInit>:
+
+#include "BUTTON.h"
+
+/* Initialize button pin as input Pull-up */
+void ButtonInit(u8 buttonPort, u8 buttonPin)
+{
+ 14a:	cf 93       	push	r28
+ 14c:	df 93       	push	r29
+ 14e:	c8 2f       	mov	r28, r24
+ 150:	d6 2f       	mov	r29, r22
+	DIO_init(buttonPort, buttonPin, IN);
+ 152:	40 e0       	ldi	r20, 0x00	; 0
+ 154:	0e 94 64 01 	call	0x2c8	; 0x2c8 <DIO_init>
+	DIO_write(buttonPort, buttonPin, HIGH);
+ 158:	41 e0       	ldi	r20, 0x01	; 1
+ 15a:	6d 2f       	mov	r22, r29
+ 15c:	8c 2f       	mov	r24, r28
+ 15e:	0e 94 a0 01 	call	0x340	; 0x340 <DIO_write>
+}
+ 162:	df 91       	pop	r29
+ 164:	cf 91       	pop	r28
+ 166:	08 95       	ret
+
+00000168 <ButtonStatus>:
+
+/* Read Buttons Pins Status */
+u8 ButtonStatus(void)
+{
+ 168:	cf 93       	push	r28
+ 16a:	df 93       	push	r29
+	u8 ButtonValue;
+	u8 A0 = DIO_read(PORTA, PIN0);
+ 16c:	60 e0       	ldi	r22, 0x00	; 0
+ 16e:	80 e0       	ldi	r24, 0x00	; 0
+ 170:	0e 94 dc 01 	call	0x3b8	; 0x3b8 <DIO_read>
+ 174:	c8 2f       	mov	r28, r24
+	u8 A1 = DIO_read(PORTA, PIN1);
+ 176:	61 e0       	ldi	r22, 0x01	; 1
+ 178:	80 e0       	ldi	r24, 0x00	; 0
+ 17a:	0e 94 dc 01 	call	0x3b8	; 0x3b8 <DIO_read>
+ 17e:	d8 2f       	mov	r29, r24
+	u8 A2 = DIO_read(PORTA, PIN2);
+ 180:	62 e0       	ldi	r22, 0x02	; 2
+ 182:	80 e0       	ldi	r24, 0x00	; 0
+ 184:	0e 94 dc 01 	call	0x3b8	; 0x3b8 <DIO_read>
+    if (A0 == 0 && A1 == 1 && A2 == 1) 
+ 188:	c1 11       	cpse	r28, r1
+ 18a:	04 c0       	rjmp	.+8      	; 0x194 <ButtonStatus+0x2c>
+ 18c:	d1 30       	cpi	r29, 0x01	; 1
+ 18e:	11 f4       	brne	.+4      	; 0x194 <ButtonStatus+0x2c>
+ 190:	81 30       	cpi	r24, 0x01	; 1
+ 192:	71 f0       	breq	.+28     	; 0x1b0 <ButtonStatus+0x48>
+	ButtonValue = 0;
+	else if (A0 == 1 && A1 == 0 && A2 == 1)
+ 194:	c1 30       	cpi	r28, 0x01	; 1
+ 196:	21 f4       	brne	.+8      	; 0x1a0 <ButtonStatus+0x38>
+ 198:	d1 11       	cpse	r29, r1
+ 19a:	02 c0       	rjmp	.+4      	; 0x1a0 <ButtonStatus+0x38>
+ 19c:	81 30       	cpi	r24, 0x01	; 1
+ 19e:	51 f0       	breq	.+20     	; 0x1b4 <ButtonStatus+0x4c>
+	ButtonValue = 1;
+	else if (A0 == 1 && A1 == 1 && A2 == 0)
+ 1a0:	c1 30       	cpi	r28, 0x01	; 1
+ 1a2:	51 f4       	brne	.+20     	; 0x1b8 <ButtonStatus+0x50>
+ 1a4:	d1 30       	cpi	r29, 0x01	; 1
+ 1a6:	51 f4       	brne	.+20     	; 0x1bc <ButtonStatus+0x54>
+ 1a8:	88 23       	and	r24, r24
+ 1aa:	51 f0       	breq	.+20     	; 0x1c0 <ButtonStatus+0x58>
+	ButtonValue = 2;
+	else
+	ButtonValue = 3;
+ 1ac:	83 e0       	ldi	r24, 0x03	; 3
+ 1ae:	09 c0       	rjmp	.+18     	; 0x1c2 <ButtonStatus+0x5a>
+	u8 ButtonValue;
+	u8 A0 = DIO_read(PORTA, PIN0);
+	u8 A1 = DIO_read(PORTA, PIN1);
+	u8 A2 = DIO_read(PORTA, PIN2);
+    if (A0 == 0 && A1 == 1 && A2 == 1) 
+	ButtonValue = 0;
+ 1b0:	80 e0       	ldi	r24, 0x00	; 0
+ 1b2:	07 c0       	rjmp	.+14     	; 0x1c2 <ButtonStatus+0x5a>
+	else if (A0 == 1 && A1 == 0 && A2 == 1)
+	ButtonValue = 1;
+ 1b4:	81 e0       	ldi	r24, 0x01	; 1
+ 1b6:	05 c0       	rjmp	.+10     	; 0x1c2 <ButtonStatus+0x5a>
+	else if (A0 == 1 && A1 == 1 && A2 == 0)
+	ButtonValue = 2;
+	else
+	ButtonValue = 3;
+ 1b8:	83 e0       	ldi	r24, 0x03	; 3
+ 1ba:	03 c0       	rjmp	.+6      	; 0x1c2 <ButtonStatus+0x5a>
+ 1bc:	83 e0       	ldi	r24, 0x03	; 3
+ 1be:	01 c0       	rjmp	.+2      	; 0x1c2 <ButtonStatus+0x5a>
+    if (A0 == 0 && A1 == 1 && A2 == 1) 
+	ButtonValue = 0;
+	else if (A0 == 1 && A1 == 0 && A2 == 1)
+	ButtonValue = 1;
+	else if (A0 == 1 && A1 == 1 && A2 == 0)
+	ButtonValue = 2;
+ 1c0:	82 e0       	ldi	r24, 0x02	; 2
+	else
+	ButtonValue = 3;
+
+	return ButtonValue;
+ 1c2:	df 91       	pop	r29
+ 1c4:	cf 91       	pop	r28
+ 1c6:	08 95       	ret
+
+000001c8 <ContInit>:
+#include "CONTACTOR.h"
+
+/* Set Contactor pin to Output */
+void ContInit(u8 ledPort, u8 ledPin)
+{
+	DIO_init(ledPort, ledPin, OUT);
+ 1c8:	41 e0       	ldi	r20, 0x01	; 1
+ 1ca:	0e 94 64 01 	call	0x2c8	; 0x2c8 <DIO_init>
+ 1ce:	08 95       	ret
+
+000001d0 <MotorRight>:
+
+/* Start Motor Right */
+void MotorRight (void)
+{
+	/* Start Right Contactor */
+	DIO_write(PORTD, PIN0, HIGH);
+ 1d0:	41 e0       	ldi	r20, 0x01	; 1
+ 1d2:	60 e0       	ldi	r22, 0x00	; 0
+ 1d4:	81 e0       	ldi	r24, 0x01	; 1
+ 1d6:	0e 94 a0 01 	call	0x340	; 0x340 <DIO_write>
+	/* Start Star Contactor for 5 Sec */
+	DIO_write(PORTD, PIN2, HIGH);
+ 1da:	41 e0       	ldi	r20, 0x01	; 1
+ 1dc:	62 e0       	ldi	r22, 0x02	; 2
+ 1de:	81 e0       	ldi	r24, 0x01	; 1
+ 1e0:	0e 94 a0 01 	call	0x340	; 0x340 <DIO_write>
+    TIM0_Start5SDelay();
+ 1e4:	0e 94 f6 01 	call	0x3ec	; 0x3ec <TIM0_Start5SDelay>
+	/* Stop Star & Start Delta Contactor */
+	DIO_write(PORTD, PIN2, LOW);
+ 1e8:	40 e0       	ldi	r20, 0x00	; 0
+ 1ea:	62 e0       	ldi	r22, 0x02	; 2
+ 1ec:	81 e0       	ldi	r24, 0x01	; 1
+ 1ee:	0e 94 a0 01 	call	0x340	; 0x340 <DIO_write>
+	DIO_write(PORTD, PIN3, HIGH);
+ 1f2:	41 e0       	ldi	r20, 0x01	; 1
+ 1f4:	63 e0       	ldi	r22, 0x03	; 3
+ 1f6:	81 e0       	ldi	r24, 0x01	; 1
+ 1f8:	0e 94 a0 01 	call	0x340	; 0x340 <DIO_write>
+ 1fc:	08 95       	ret
+
+000001fe <MotorLeft>:
+
+/* Start Motor Left */
+void MotorLeft (void)
+{
+    /* Start Left Contactor */
+    DIO_write(PORTD, PIN1, HIGH);
+ 1fe:	41 e0       	ldi	r20, 0x01	; 1
+ 200:	61 e0       	ldi	r22, 0x01	; 1
+ 202:	81 e0       	ldi	r24, 0x01	; 1
+ 204:	0e 94 a0 01 	call	0x340	; 0x340 <DIO_write>
+    /* Start Star Contactor for 5 Sec */
+    DIO_write(PORTD, PIN2, HIGH);
+ 208:	41 e0       	ldi	r20, 0x01	; 1
+ 20a:	62 e0       	ldi	r22, 0x02	; 2
+ 20c:	81 e0       	ldi	r24, 0x01	; 1
+ 20e:	0e 94 a0 01 	call	0x340	; 0x340 <DIO_write>
+    TIM0_Start5SDelay();
+ 212:	0e 94 f6 01 	call	0x3ec	; 0x3ec <TIM0_Start5SDelay>
+    /* Stop Star & Start Delta */
+    DIO_write(PORTD, PIN2, LOW);
+ 216:	40 e0       	ldi	r20, 0x00	; 0
+ 218:	62 e0       	ldi	r22, 0x02	; 2
+ 21a:	81 e0       	ldi	r24, 0x01	; 1
+ 21c:	0e 94 a0 01 	call	0x340	; 0x340 <DIO_write>
+    DIO_write(PORTD, PIN3, HIGH);
+ 220:	41 e0       	ldi	r20, 0x01	; 1
+ 222:	63 e0       	ldi	r22, 0x03	; 3
+ 224:	81 e0       	ldi	r24, 0x01	; 1
+ 226:	0e 94 a0 01 	call	0x340	; 0x340 <DIO_write>
+ 22a:	08 95       	ret
+
+0000022c <StopMotor_R>:
+
+/* Stop Right Motor */
+void StopMotor_R (void)
+{
+	/* Stop Three Contactors */
+	DIO_write(PORTD, PIN0, LOW);
+ 22c:	40 e0       	ldi	r20, 0x00	; 0
+ 22e:	60 e0       	ldi	r22, 0x00	; 0
+ 230:	81 e0       	ldi	r24, 0x01	; 1
+ 232:	0e 94 a0 01 	call	0x340	; 0x340 <DIO_write>
+    DIO_write(PORTD, PIN2, LOW);
+ 236:	40 e0       	ldi	r20, 0x00	; 0
+ 238:	62 e0       	ldi	r22, 0x02	; 2
+ 23a:	81 e0       	ldi	r24, 0x01	; 1
+ 23c:	0e 94 a0 01 	call	0x340	; 0x340 <DIO_write>
+    DIO_write(PORTD, PIN3, LOW);
+ 240:	40 e0       	ldi	r20, 0x00	; 0
+ 242:	63 e0       	ldi	r22, 0x03	; 3
+ 244:	81 e0       	ldi	r24, 0x01	; 1
+ 246:	0e 94 a0 01 	call	0x340	; 0x340 <DIO_write>
+	/* Delay to Avoid Direct Reverse */
+	TIM0Stop_R5SDelay();
+ 24a:	0e 94 1e 02 	call	0x43c	; 0x43c <TIM0Stop_R5SDelay>
+ 24e:	08 95       	ret
+
+00000250 <StopMotor_L>:
+
+/* Stop Left Motor */
+void StopMotor_L (void)
+{
+	/* Stop Three Contactors */
+	DIO_write(PORTD, PIN1, LOW);
+ 250:	40 e0       	ldi	r20, 0x00	; 0
+ 252:	61 e0       	ldi	r22, 0x01	; 1
+ 254:	81 e0       	ldi	r24, 0x01	; 1
+ 256:	0e 94 a0 01 	call	0x340	; 0x340 <DIO_write>
+	DIO_write(PORTD, PIN2, LOW);
+ 25a:	40 e0       	ldi	r20, 0x00	; 0
+ 25c:	62 e0       	ldi	r22, 0x02	; 2
+ 25e:	81 e0       	ldi	r24, 0x01	; 1
+ 260:	0e 94 a0 01 	call	0x340	; 0x340 <DIO_write>
+	DIO_write(PORTD, PIN3, LOW);
+ 264:	40 e0       	ldi	r20, 0x00	; 0
+ 266:	63 e0       	ldi	r22, 0x03	; 3
+ 268:	81 e0       	ldi	r24, 0x01	; 1
+ 26a:	0e 94 a0 01 	call	0x340	; 0x340 <DIO_write>
+	/* Delay to Avoid Direct Reverse */
+	TIM0Stop_L5SDelay();
+ 26e:	0e 94 46 02 	call	0x48c	; 0x48c <TIM0Stop_L5SDelay>
+ 272:	08 95       	ret
+
+00000274 <ContStatus>:
+}
+
+/* Read Contactor Pins Status */
+u8 ContStatus(void)
+{
+ 274:	cf 93       	push	r28
+ 276:	df 93       	push	r29
+	u8 ContValue;
+	u8 D0 = DIO_read(PORTD, PIN0);
+ 278:	60 e0       	ldi	r22, 0x00	; 0
+ 27a:	81 e0       	ldi	r24, 0x01	; 1
+ 27c:	0e 94 dc 01 	call	0x3b8	; 0x3b8 <DIO_read>
+ 280:	c8 2f       	mov	r28, r24
+	u8 D1 = DIO_read(PORTD, PIN1);
+ 282:	61 e0       	ldi	r22, 0x01	; 1
+ 284:	81 e0       	ldi	r24, 0x01	; 1
+ 286:	0e 94 dc 01 	call	0x3b8	; 0x3b8 <DIO_read>
+	if (D0 == 0 && D1 == 0)
+ 28a:	c1 11       	cpse	r28, r1
+ 28c:	02 c0       	rjmp	.+4      	; 0x292 <ContStatus+0x1e>
+ 28e:	88 23       	and	r24, r24
+ 290:	49 f0       	breq	.+18     	; 0x2a4 <ContStatus+0x30>
+	ContValue = 0;
+	else if (D0 == 1 || D1 == 0)
+ 292:	c1 30       	cpi	r28, 0x01	; 1
+ 294:	49 f0       	breq	.+18     	; 0x2a8 <ContStatus+0x34>
+ 296:	88 23       	and	r24, r24
+ 298:	49 f0       	breq	.+18     	; 0x2ac <ContStatus+0x38>
+	ContValue = 1;
+	else if (D0 == 0 || D1 == 1)
+ 29a:	cc 23       	and	r28, r28
+ 29c:	49 f0       	breq	.+18     	; 0x2b0 <ContStatus+0x3c>
+ 29e:	81 30       	cpi	r24, 0x01	; 1
+ 2a0:	51 f4       	brne	.+20     	; 0x2b6 <ContStatus+0x42>
+ 2a2:	08 c0       	rjmp	.+16     	; 0x2b4 <ContStatus+0x40>
+{
+	u8 ContValue;
+	u8 D0 = DIO_read(PORTD, PIN0);
+	u8 D1 = DIO_read(PORTD, PIN1);
+	if (D0 == 0 && D1 == 0)
+	ContValue = 0;
+ 2a4:	d0 e0       	ldi	r29, 0x00	; 0
+ 2a6:	07 c0       	rjmp	.+14     	; 0x2b6 <ContStatus+0x42>
+	else if (D0 == 1 || D1 == 0)
+	ContValue = 1;
+ 2a8:	d1 e0       	ldi	r29, 0x01	; 1
+ 2aa:	05 c0       	rjmp	.+10     	; 0x2b6 <ContStatus+0x42>
+ 2ac:	d1 e0       	ldi	r29, 0x01	; 1
+ 2ae:	03 c0       	rjmp	.+6      	; 0x2b6 <ContStatus+0x42>
+	else if (D0 == 0 || D1 == 1)
+	ContValue = 2;
+ 2b0:	d2 e0       	ldi	r29, 0x02	; 2
+ 2b2:	01 c0       	rjmp	.+2      	; 0x2b6 <ContStatus+0x42>
+ 2b4:	d2 e0       	ldi	r29, 0x02	; 2
+	
+	return ContValue;
+}
+ 2b6:	8d 2f       	mov	r24, r29
+ 2b8:	df 91       	pop	r29
+ 2ba:	cf 91       	pop	r28
+ 2bc:	08 95       	ret
+
+000002be <main>:
+#include "APP/APP.h"
+
+/* Initialize Application */
+int main(void)
+{
+	AppInit();
+ 2be:	0e 94 3e 00 	call	0x7c	; 0x7c <AppInit>
+
+	while (1)
+	{
+		/* Starting Application */
+		AppStart();
+ 2c2:	0e 94 5b 00 	call	0xb6	; 0xb6 <AppStart>
+ 2c6:	fd cf       	rjmp	.-6      	; 0x2c2 <main+0x4>
+
+000002c8 <DIO_init>:
+#include "DIO.h"
+
+/* Set Pin Direction (IN/ OUT) */
+void DIO_init(u8 portNumber, u8 pinNumber, u8 direction)
+{
+	if (direction == OUT)
+ 2c8:	41 30       	cpi	r20, 0x01	; 1
+ 2ca:	d9 f4       	brne	.+54     	; 0x302 <DIO_init+0x3a>
+	{
+	switch (portNumber)
+ 2cc:	88 23       	and	r24, r24
+ 2ce:	19 f0       	breq	.+6      	; 0x2d6 <DIO_init+0xe>
+ 2d0:	81 30       	cpi	r24, 0x01	; 1
+ 2d2:	61 f0       	breq	.+24     	; 0x2ec <DIO_init+0x24>
+ 2d4:	08 95       	ret
+	{
+	case PORTA: SET_BIT(DDRA_Register,pinNumber); break;
+ 2d6:	2a b3       	in	r18, 0x1a	; 26
+ 2d8:	81 e0       	ldi	r24, 0x01	; 1
+ 2da:	90 e0       	ldi	r25, 0x00	; 0
+ 2dc:	02 c0       	rjmp	.+4      	; 0x2e2 <DIO_init+0x1a>
+ 2de:	88 0f       	add	r24, r24
+ 2e0:	99 1f       	adc	r25, r25
+ 2e2:	6a 95       	dec	r22
+ 2e4:	e2 f7       	brpl	.-8      	; 0x2de <DIO_init+0x16>
+ 2e6:	82 2b       	or	r24, r18
+ 2e8:	8a bb       	out	0x1a, r24	; 26
+ 2ea:	08 95       	ret
+	case PORTD: SET_BIT(DDRD_Register,pinNumber); break;
+ 2ec:	21 b3       	in	r18, 0x11	; 17
+ 2ee:	81 e0       	ldi	r24, 0x01	; 1
+ 2f0:	90 e0       	ldi	r25, 0x00	; 0
+ 2f2:	02 c0       	rjmp	.+4      	; 0x2f8 <DIO_init+0x30>
+ 2f4:	88 0f       	add	r24, r24
+ 2f6:	99 1f       	adc	r25, r25
+ 2f8:	6a 95       	dec	r22
+ 2fa:	e2 f7       	brpl	.-8      	; 0x2f4 <DIO_init+0x2c>
+ 2fc:	82 2b       	or	r24, r18
+ 2fe:	81 bb       	out	0x11, r24	; 17
+ 300:	08 95       	ret
+	}
+	}
+	else if (direction == IN)
+ 302:	41 11       	cpse	r20, r1
+ 304:	1c c0       	rjmp	.+56     	; 0x33e <DIO_init+0x76>
+	{
+	switch (portNumber)
+ 306:	88 23       	and	r24, r24
+ 308:	19 f0       	breq	.+6      	; 0x310 <DIO_init+0x48>
+ 30a:	81 30       	cpi	r24, 0x01	; 1
+ 30c:	69 f0       	breq	.+26     	; 0x328 <DIO_init+0x60>
+ 30e:	08 95       	ret
+	{
+	case PORTA: CLR_BIT(DDRA_Register,pinNumber); break;
+ 310:	2a b3       	in	r18, 0x1a	; 26
+ 312:	81 e0       	ldi	r24, 0x01	; 1
+ 314:	90 e0       	ldi	r25, 0x00	; 0
+ 316:	02 c0       	rjmp	.+4      	; 0x31c <DIO_init+0x54>
+ 318:	88 0f       	add	r24, r24
+ 31a:	99 1f       	adc	r25, r25
+ 31c:	6a 95       	dec	r22
+ 31e:	e2 f7       	brpl	.-8      	; 0x318 <DIO_init+0x50>
+ 320:	80 95       	com	r24
+ 322:	82 23       	and	r24, r18
+ 324:	8a bb       	out	0x1a, r24	; 26
+ 326:	08 95       	ret
+	case PORTD: CLR_BIT(DDRD_Register,pinNumber); break;
+ 328:	21 b3       	in	r18, 0x11	; 17
+ 32a:	81 e0       	ldi	r24, 0x01	; 1
+ 32c:	90 e0       	ldi	r25, 0x00	; 0
+ 32e:	02 c0       	rjmp	.+4      	; 0x334 <DIO_init+0x6c>
+ 330:	88 0f       	add	r24, r24
+ 332:	99 1f       	adc	r25, r25
+ 334:	6a 95       	dec	r22
+ 336:	e2 f7       	brpl	.-8      	; 0x330 <DIO_init+0x68>
+ 338:	80 95       	com	r24
+ 33a:	82 23       	and	r24, r18
+ 33c:	81 bb       	out	0x11, r24	; 17
+ 33e:	08 95       	ret
+
+00000340 <DIO_write>:
+}
+
+/* Set Pin Value (HIGH/ LOW) */
+void DIO_write(u8 portNumber, u8 pinNumber, u8 value)
+{
+	if (value == HIGH)
+ 340:	41 30       	cpi	r20, 0x01	; 1
+ 342:	d9 f4       	brne	.+54     	; 0x37a <DIO_write+0x3a>
+	{
+	switch (portNumber)
+ 344:	88 23       	and	r24, r24
+ 346:	19 f0       	breq	.+6      	; 0x34e <DIO_write+0xe>
+ 348:	81 30       	cpi	r24, 0x01	; 1
+ 34a:	61 f0       	breq	.+24     	; 0x364 <DIO_write+0x24>
+ 34c:	08 95       	ret
+	{
+    case PORTA: SET_BIT(PORTA_Register,pinNumber); break;
+ 34e:	2b b3       	in	r18, 0x1b	; 27
+ 350:	81 e0       	ldi	r24, 0x01	; 1
+ 352:	90 e0       	ldi	r25, 0x00	; 0
+ 354:	02 c0       	rjmp	.+4      	; 0x35a <DIO_write+0x1a>
+ 356:	88 0f       	add	r24, r24
+ 358:	99 1f       	adc	r25, r25
+ 35a:	6a 95       	dec	r22
+ 35c:	e2 f7       	brpl	.-8      	; 0x356 <DIO_write+0x16>
+ 35e:	82 2b       	or	r24, r18
+ 360:	8b bb       	out	0x1b, r24	; 27
+ 362:	08 95       	ret
+	case PORTD: SET_BIT(PORTD_Register,pinNumber); break;
+ 364:	22 b3       	in	r18, 0x12	; 18
+ 366:	81 e0       	ldi	r24, 0x01	; 1
+ 368:	90 e0       	ldi	r25, 0x00	; 0
+ 36a:	02 c0       	rjmp	.+4      	; 0x370 <DIO_write+0x30>
+ 36c:	88 0f       	add	r24, r24
+ 36e:	99 1f       	adc	r25, r25
+ 370:	6a 95       	dec	r22
+ 372:	e2 f7       	brpl	.-8      	; 0x36c <DIO_write+0x2c>
+ 374:	82 2b       	or	r24, r18
+ 376:	82 bb       	out	0x12, r24	; 18
+ 378:	08 95       	ret
+	}
+	}
+	else if (value == LOW)
+ 37a:	41 11       	cpse	r20, r1
+ 37c:	1c c0       	rjmp	.+56     	; 0x3b6 <DIO_write+0x76>
+	{
+	switch (portNumber)
+ 37e:	88 23       	and	r24, r24
+ 380:	19 f0       	breq	.+6      	; 0x388 <DIO_write+0x48>
+ 382:	81 30       	cpi	r24, 0x01	; 1
+ 384:	69 f0       	breq	.+26     	; 0x3a0 <DIO_write+0x60>
+ 386:	08 95       	ret
+	{
+	case PORTA: CLR_BIT(PORTA_Register,pinNumber); break;
+ 388:	2b b3       	in	r18, 0x1b	; 27
+ 38a:	81 e0       	ldi	r24, 0x01	; 1
+ 38c:	90 e0       	ldi	r25, 0x00	; 0
+ 38e:	02 c0       	rjmp	.+4      	; 0x394 <DIO_write+0x54>
+ 390:	88 0f       	add	r24, r24
+ 392:	99 1f       	adc	r25, r25
+ 394:	6a 95       	dec	r22
+ 396:	e2 f7       	brpl	.-8      	; 0x390 <DIO_write+0x50>
+ 398:	80 95       	com	r24
+ 39a:	82 23       	and	r24, r18
+ 39c:	8b bb       	out	0x1b, r24	; 27
+ 39e:	08 95       	ret
+	case PORTD: CLR_BIT(PORTD_Register,pinNumber); break;
+ 3a0:	22 b3       	in	r18, 0x12	; 18
+ 3a2:	81 e0       	ldi	r24, 0x01	; 1
+ 3a4:	90 e0       	ldi	r25, 0x00	; 0
+ 3a6:	02 c0       	rjmp	.+4      	; 0x3ac <DIO_write+0x6c>
+ 3a8:	88 0f       	add	r24, r24
+ 3aa:	99 1f       	adc	r25, r25
+ 3ac:	6a 95       	dec	r22
+ 3ae:	e2 f7       	brpl	.-8      	; 0x3a8 <DIO_write+0x68>
+ 3b0:	80 95       	com	r24
+ 3b2:	82 23       	and	r24, r18
+ 3b4:	82 bb       	out	0x12, r24	; 18
+ 3b6:	08 95       	ret
+
+000003b8 <DIO_read>:
+
+/* Get Pin Value (IN/ OUT) */
+u8 DIO_read(u8 portNumber, u8 pinNumber)
+{
+	u8 PinValue;
+	switch (portNumber)
+ 3b8:	88 23       	and	r24, r24
+ 3ba:	19 f0       	breq	.+6      	; 0x3c2 <DIO_read+0xa>
+ 3bc:	81 30       	cpi	r24, 0x01	; 1
+ 3be:	59 f0       	breq	.+22     	; 0x3d6 <DIO_read+0x1e>
+ 3c0:	13 c0       	rjmp	.+38     	; 0x3e8 <DIO_read+0x30>
+	{
+	case PORTA: PinValue = GET_BIT(PINA_Register,pinNumber); break;
+ 3c2:	89 b3       	in	r24, 0x19	; 25
+ 3c4:	90 e0       	ldi	r25, 0x00	; 0
+ 3c6:	02 c0       	rjmp	.+4      	; 0x3cc <DIO_read+0x14>
+ 3c8:	95 95       	asr	r25
+ 3ca:	87 95       	ror	r24
+ 3cc:	6a 95       	dec	r22
+ 3ce:	e2 f7       	brpl	.-8      	; 0x3c8 <DIO_read+0x10>
+ 3d0:	98 2f       	mov	r25, r24
+ 3d2:	91 70       	andi	r25, 0x01	; 1
+ 3d4:	09 c0       	rjmp	.+18     	; 0x3e8 <DIO_read+0x30>
+	case PORTD: PinValue = GET_BIT(PIND_Register,pinNumber); break;
+ 3d6:	80 b3       	in	r24, 0x10	; 16
+ 3d8:	90 e0       	ldi	r25, 0x00	; 0
+ 3da:	02 c0       	rjmp	.+4      	; 0x3e0 <DIO_read+0x28>
+ 3dc:	95 95       	asr	r25
+ 3de:	87 95       	ror	r24
+ 3e0:	6a 95       	dec	r22
+ 3e2:	e2 f7       	brpl	.-8      	; 0x3dc <DIO_read+0x24>
+ 3e4:	98 2f       	mov	r25, r24
+ 3e6:	91 70       	andi	r25, 0x01	; 1
+	}
+	return PinValue;
+ 3e8:	89 2f       	mov	r24, r25
+ 3ea:	08 95       	ret
+
+000003ec <TIM0_Start5SDelay>:
+/* Set Timer_0 for 5 sec Delay */
+void TIM0_Start5SDelay(void)
+{
+	u8 OverFlowCounter = 0;
+	/* Select Normal Mode */
+	TCCR0_Register &= ~(1<<3);
+ 3ec:	83 b7       	in	r24, 0x33	; 51
+ 3ee:	87 7f       	andi	r24, 0xF7	; 247
+ 3f0:	83 bf       	out	0x33, r24	; 51
+	TCCR0_Register &= ~(1<<6);
+ 3f2:	83 b7       	in	r24, 0x33	; 51
+ 3f4:	8f 7b       	andi	r24, 0xBF	; 191
+ 3f6:	83 bf       	out	0x33, r24	; 51
+	/* Set Starting Value */
+	TCNT0_Register = 11;
+ 3f8:	8b e0       	ldi	r24, 0x0B	; 11
+ 3fa:	82 bf       	out	0x32, r24	; 50
+	/* start Timer & Pre-scalar Select (1024) */
+	TCCR0_Register |= (1<<0);
+ 3fc:	83 b7       	in	r24, 0x33	; 51
+ 3fe:	81 60       	ori	r24, 0x01	; 1
+ 400:	83 bf       	out	0x33, r24	; 51
+	TCCR0_Register &= ~(1<<1);
+ 402:	83 b7       	in	r24, 0x33	; 51
+ 404:	8d 7f       	andi	r24, 0xFD	; 253
+ 406:	83 bf       	out	0x33, r24	; 51
+	TCCR0_Register |= (1<<2);
+ 408:	83 b7       	in	r24, 0x33	; 51
+ 40a:	84 60       	ori	r24, 0x04	; 4
+ 40c:	83 bf       	out	0x33, r24	; 51
+#include "TIMER.h"
+
+/* Set Timer_0 for 5 sec Delay */
+void TIM0_Start5SDelay(void)
+{
+	u8 OverFlowCounter = 0;
+ 40e:	90 e0       	ldi	r25, 0x00	; 0
+	TCNT0_Register = 11;
+	/* start Timer & Pre-scalar Select (1024) */
+	TCCR0_Register |= (1<<0);
+	TCCR0_Register &= ~(1<<1);
+	TCCR0_Register |= (1<<2);
+	while (OverFlowCounter<20)
+ 410:	09 c0       	rjmp	.+18     	; 0x424 <__EEPROM_REGION_LENGTH__+0x24>
+	{
+	/* Checking Timer OVF Flag Status */
+	while (!GET_BIT(TIFR_Register, 0) && GET_BIT(PINA_Register, 2));
+ 412:	08 b6       	in	r0, 0x38	; 56
+ 414:	00 fc       	sbrc	r0, 0
+ 416:	02 c0       	rjmp	.+4      	; 0x41c <__EEPROM_REGION_LENGTH__+0x1c>
+ 418:	ca 99       	sbic	0x19, 2	; 25
+ 41a:	fb cf       	rjmp	.-10     	; 0x412 <__EEPROM_REGION_LENGTH__+0x12>
+	/* Clear Timer OVF flag */
+	TIFR_Register |= (1<<0);
+ 41c:	88 b7       	in	r24, 0x38	; 56
+ 41e:	81 60       	ori	r24, 0x01	; 1
+ 420:	88 bf       	out	0x38, r24	; 56
+	OverFlowCounter++;
+ 422:	9f 5f       	subi	r25, 0xFF	; 255
+	TCNT0_Register = 11;
+	/* start Timer & Pre-scalar Select (1024) */
+	TCCR0_Register |= (1<<0);
+	TCCR0_Register &= ~(1<<1);
+	TCCR0_Register |= (1<<2);
+	while (OverFlowCounter<20)
+ 424:	94 31       	cpi	r25, 0x14	; 20
+ 426:	a8 f3       	brcs	.-22     	; 0x412 <__EEPROM_REGION_LENGTH__+0x12>
+	TIFR_Register |= (1<<0);
+	OverFlowCounter++;
+	}
+	OverFlowCounter = 0;
+	/* Stop Timer */
+	TCCR0_Register &= ~(1<<0);
+ 428:	83 b7       	in	r24, 0x33	; 51
+ 42a:	8e 7f       	andi	r24, 0xFE	; 254
+ 42c:	83 bf       	out	0x33, r24	; 51
+	TCCR0_Register &= ~(1<<1);
+ 42e:	83 b7       	in	r24, 0x33	; 51
+ 430:	8d 7f       	andi	r24, 0xFD	; 253
+ 432:	83 bf       	out	0x33, r24	; 51
+	TCCR0_Register &= ~(1<<2);
+ 434:	83 b7       	in	r24, 0x33	; 51
+ 436:	8b 7f       	andi	r24, 0xFB	; 251
+ 438:	83 bf       	out	0x33, r24	; 51
+ 43a:	08 95       	ret
+
+0000043c <TIM0Stop_R5SDelay>:
+/* Set Timer_0 for 5 sec Delay at Stop_R */
+void TIM0Stop_R5SDelay(void)
+{
+	u8 OverFlowCounter = 0;
+	/* Select Normal Mode */
+	TCCR0_Register &= ~(1<<3);
+ 43c:	83 b7       	in	r24, 0x33	; 51
+ 43e:	87 7f       	andi	r24, 0xF7	; 247
+ 440:	83 bf       	out	0x33, r24	; 51
+	TCCR0_Register &= ~(1<<6);
+ 442:	83 b7       	in	r24, 0x33	; 51
+ 444:	8f 7b       	andi	r24, 0xBF	; 191
+ 446:	83 bf       	out	0x33, r24	; 51
+	/* Set Starting Value */
+	TCNT0_Register = 11;
+ 448:	8b e0       	ldi	r24, 0x0B	; 11
+ 44a:	82 bf       	out	0x32, r24	; 50
+	/* start Timer & Pre-scalar Select (1024) */
+	TCCR0_Register |= (1<<0);
+ 44c:	83 b7       	in	r24, 0x33	; 51
+ 44e:	81 60       	ori	r24, 0x01	; 1
+ 450:	83 bf       	out	0x33, r24	; 51
+	TCCR0_Register &= ~(1<<1);
+ 452:	83 b7       	in	r24, 0x33	; 51
+ 454:	8d 7f       	andi	r24, 0xFD	; 253
+ 456:	83 bf       	out	0x33, r24	; 51
+	TCCR0_Register |= (1<<2);
+ 458:	83 b7       	in	r24, 0x33	; 51
+ 45a:	84 60       	ori	r24, 0x04	; 4
+ 45c:	83 bf       	out	0x33, r24	; 51
+}
+
+/* Set Timer_0 for 5 sec Delay at Stop_R */
+void TIM0Stop_R5SDelay(void)
+{
+	u8 OverFlowCounter = 0;
+ 45e:	90 e0       	ldi	r25, 0x00	; 0
+	TCNT0_Register = 11;
+	/* start Timer & Pre-scalar Select (1024) */
+	TCCR0_Register |= (1<<0);
+	TCCR0_Register &= ~(1<<1);
+	TCCR0_Register |= (1<<2);
+	while (OverFlowCounter<20)
+ 460:	09 c0       	rjmp	.+18     	; 0x474 <TIM0Stop_R5SDelay+0x38>
+	{
+	/* Checking Timer OVF Flag Status */
+	while (!GET_BIT(TIFR_Register, 0) && GET_BIT(PINA_Register, 0));
+ 462:	08 b6       	in	r0, 0x38	; 56
+ 464:	00 fc       	sbrc	r0, 0
+ 466:	02 c0       	rjmp	.+4      	; 0x46c <TIM0Stop_R5SDelay+0x30>
+ 468:	c8 99       	sbic	0x19, 0	; 25
+ 46a:	fb cf       	rjmp	.-10     	; 0x462 <TIM0Stop_R5SDelay+0x26>
+	/* Clear Timer OVF flag */
+	TIFR_Register |= (1<<0);
+ 46c:	88 b7       	in	r24, 0x38	; 56
+ 46e:	81 60       	ori	r24, 0x01	; 1
+ 470:	88 bf       	out	0x38, r24	; 56
+	OverFlowCounter++;
+ 472:	9f 5f       	subi	r25, 0xFF	; 255
+	TCNT0_Register = 11;
+	/* start Timer & Pre-scalar Select (1024) */
+	TCCR0_Register |= (1<<0);
+	TCCR0_Register &= ~(1<<1);
+	TCCR0_Register |= (1<<2);
+	while (OverFlowCounter<20)
+ 474:	94 31       	cpi	r25, 0x14	; 20
+ 476:	a8 f3       	brcs	.-22     	; 0x462 <TIM0Stop_R5SDelay+0x26>
+	TIFR_Register |= (1<<0);
+	OverFlowCounter++;
+	}
+	OverFlowCounter = 0;
+	/* Stop Timer */
+	TCCR0_Register &= ~(1<<0);
+ 478:	83 b7       	in	r24, 0x33	; 51
+ 47a:	8e 7f       	andi	r24, 0xFE	; 254
+ 47c:	83 bf       	out	0x33, r24	; 51
+	TCCR0_Register &= ~(1<<1);
+ 47e:	83 b7       	in	r24, 0x33	; 51
+ 480:	8d 7f       	andi	r24, 0xFD	; 253
+ 482:	83 bf       	out	0x33, r24	; 51
+	TCCR0_Register &= ~(1<<2);	
+ 484:	83 b7       	in	r24, 0x33	; 51
+ 486:	8b 7f       	andi	r24, 0xFB	; 251
+ 488:	83 bf       	out	0x33, r24	; 51
+ 48a:	08 95       	ret
+
+0000048c <TIM0Stop_L5SDelay>:
+/* Set Timer_0 for 5 sec Delay at Stop_L */
+void TIM0Stop_L5SDelay(void)
+{
+	u8 OverFlowCounter = 0;
+	/* Select Normal Mode */
+	TCCR0_Register &= ~(1<<3);
+ 48c:	83 b7       	in	r24, 0x33	; 51
+ 48e:	87 7f       	andi	r24, 0xF7	; 247
+ 490:	83 bf       	out	0x33, r24	; 51
+	TCCR0_Register &= ~(1<<6);
+ 492:	83 b7       	in	r24, 0x33	; 51
+ 494:	8f 7b       	andi	r24, 0xBF	; 191
+ 496:	83 bf       	out	0x33, r24	; 51
+	/* Set Starting Value */
+	TCNT0_Register = 11;
+ 498:	8b e0       	ldi	r24, 0x0B	; 11
+ 49a:	82 bf       	out	0x32, r24	; 50
+	/* start Timer & Pre-scalar Select (1024) */
+	TCCR0_Register |= (1<<0);
+ 49c:	83 b7       	in	r24, 0x33	; 51
+ 49e:	81 60       	ori	r24, 0x01	; 1
+ 4a0:	83 bf       	out	0x33, r24	; 51
+	TCCR0_Register &= ~(1<<1);
+ 4a2:	83 b7       	in	r24, 0x33	; 51
+ 4a4:	8d 7f       	andi	r24, 0xFD	; 253
+ 4a6:	83 bf       	out	0x33, r24	; 51
+	TCCR0_Register |= (1<<2);
+ 4a8:	83 b7       	in	r24, 0x33	; 51
+ 4aa:	84 60       	ori	r24, 0x04	; 4
+ 4ac:	83 bf       	out	0x33, r24	; 51
+}
+
+/* Set Timer_0 for 5 sec Delay at Stop_L */
+void TIM0Stop_L5SDelay(void)
+{
+	u8 OverFlowCounter = 0;
+ 4ae:	90 e0       	ldi	r25, 0x00	; 0
+	TCNT0_Register = 11;
+	/* start Timer & Pre-scalar Select (1024) */
+	TCCR0_Register |= (1<<0);
+	TCCR0_Register &= ~(1<<1);
+	TCCR0_Register |= (1<<2);
+	while (OverFlowCounter<20)
+ 4b0:	09 c0       	rjmp	.+18     	; 0x4c4 <TIM0Stop_L5SDelay+0x38>
+	{
+	/* Checking Timer OVF Flag Status */
+	while (!GET_BIT(TIFR_Register, 0) && GET_BIT(PINA_Register, 1));
+ 4b2:	08 b6       	in	r0, 0x38	; 56
+ 4b4:	00 fc       	sbrc	r0, 0
+ 4b6:	02 c0       	rjmp	.+4      	; 0x4bc <TIM0Stop_L5SDelay+0x30>
+ 4b8:	c9 99       	sbic	0x19, 1	; 25
+ 4ba:	fb cf       	rjmp	.-10     	; 0x4b2 <TIM0Stop_L5SDelay+0x26>
+	/* Clear Timer OVF flag */
+	TIFR_Register |= (1<<0);
+ 4bc:	88 b7       	in	r24, 0x38	; 56
+ 4be:	81 60       	ori	r24, 0x01	; 1
+ 4c0:	88 bf       	out	0x38, r24	; 56
+	OverFlowCounter++;
+ 4c2:	9f 5f       	subi	r25, 0xFF	; 255
+	TCNT0_Register = 11;
+	/* start Timer & Pre-scalar Select (1024) */
+	TCCR0_Register |= (1<<0);
+	TCCR0_Register &= ~(1<<1);
+	TCCR0_Register |= (1<<2);
+	while (OverFlowCounter<20)
+ 4c4:	94 31       	cpi	r25, 0x14	; 20
+ 4c6:	a8 f3       	brcs	.-22     	; 0x4b2 <TIM0Stop_L5SDelay+0x26>
+	TIFR_Register |= (1<<0);
+	OverFlowCounter++;
+	}
+	OverFlowCounter = 0;
+	/* Stop Timer */
+	TCCR0_Register &= ~(1<<0);
+ 4c8:	83 b7       	in	r24, 0x33	; 51
+ 4ca:	8e 7f       	andi	r24, 0xFE	; 254
+ 4cc:	83 bf       	out	0x33, r24	; 51
+	TCCR0_Register &= ~(1<<1);
+ 4ce:	83 b7       	in	r24, 0x33	; 51
+ 4d0:	8d 7f       	andi	r24, 0xFD	; 253
+ 4d2:	83 bf       	out	0x33, r24	; 51
+	TCCR0_Register &= ~(1<<2);	
+ 4d4:	83 b7       	in	r24, 0x33	; 51
+ 4d6:	8b 7f       	andi	r24, 0xFB	; 251
+ 4d8:	83 bf       	out	0x33, r24	; 51
+ 4da:	08 95       	ret
+
+000004dc <_exit>:
+ 4dc:	f8 94       	cli
+
+000004de <__stop_program>:
+ 4de:	ff cf       	rjmp	.-2      	; 0x4de <__stop_program>
