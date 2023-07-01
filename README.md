@@ -9,10 +9,13 @@ The driver provides two main safety fearures; first is it provides interlock pro
 
 The components used:
 
-ATmega32 micro-controller.
-Three push-buttons to control operation and direction (Star right, start left and stop)
-Four contactors (Star, Delta, Right and left). External interfacing between micro-controller and contactor coils (can use open collector buffer gates, 5V Relays or transistor).
-Three phase motor. ATmega32 programmed using Microchip Studio IDE. The project simulated on Proteus software.
+1. ATmega32 micro-controller.
+2. Three push-buttons to control operation and direction (Star right, start left and stop)
+3. Four contactors (Star, Delta, Right and left).
+4. External interfacing between micro-controller and contactor coils (can use open collector buffer gates, 5V Relays or transistor).
+5. Three phase motor.
+
+ATmega32 programmed using Microchip Studio IDE. The project simulated on Proteus software.
 
 The prepherals used:
 
