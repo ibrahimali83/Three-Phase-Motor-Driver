@@ -13,3 +13,8 @@ The components used are:
 External interfacing between micro-controller and contactor coils (can use open collector buffer gates, 5V Relays or transistor).
 4. Three phase motor.
 ATmega32 programmed using Microchip Studio IDE. The project simulated on Proteus software.
+
+The prepherals used:
+
+1. GPIO.
+2. Timer 0.
